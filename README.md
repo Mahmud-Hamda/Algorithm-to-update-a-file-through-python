@@ -1,7 +1,70 @@
-# Algorithm-to-update-a-file-through-python
+# Define a function named `update_file` that takes in two parameters: `import_file` and `remove_list`
+# and combines the steps you've written in this lab leading up to this
 
-Let us assume that I am a security professional working at a healthcare company. As part of my job, I am required to regularly update a file that identifies the employees who can access restricted content. The contents of the file are based on who is working with personal patient records. Employees are restricted to access based on their IP address. There is an allow-list for IP addresses permitted to sign into the restricted subnetwork. There is also a remov-list that identifies which employees I must remove from this allow-list.
-The "allow_list.txt" file identifies an allow-list of IP addresses. A separate remove-list identifies IP addresses that should no longer have access to this content. The remove-list = ["192.168.97.225", "192.168.158.170", "192.168.201.40", "192.168.58.57"]
+def update_file(import_file, remove_list):
+
+  # Build `with` statement to read in the initial contents of the file
+
+  with open(import_file, "r") as file:
+
+    # Use `.read()` to read the imported file and store it in a variable named `ip_addresses`
+
+    ip_addresses = file.read()
+
+  # Use `.split()` to convert `ip_addresses` from a string to a list
+
+  ip_addresses = ip_addresses.split()
+
+  # Build iterative statement
+  # Name loop variable `element`
+  # Loop through `ip_addresses`
+
+  for element in ip_addresses:
+    
+    # Build conditional statement
+    # If current element is in `remove_list`,
+    
+    if element in remove_list:
+
+      # then current element should be removed from `ip_addresses`
+
+      ip_addresses.remove(element)
+
+  # Convert `ip_addresses` back to a string so that it can be written into the text file 
+
+  ip_addresses = " ".join(ip_addresses)       
+
+  # Build `with` statement to rewrite the original file
+
+  with open(import_file, "w") as file:
+
+    # Rewrite the file, replacing its contents with `ip_addresses`
+
+    file.write(ip_addresses)
 
 
-My task is to create an algorithm that uses Python code to check whether the allow-list contains any IP addresses identified on the remove-list. If so, I should remove those IP addresses from the file containing the allow-list. So, I created an algorithm to automate updating the "allow_list.txt" file and remove these IP addresses that should no longer have access. I will show it step-by-step as follows.
+    
+# Assign `import_file` to the name of the file 
+
+import_file = "allow_list.txt"
+
+# Assign `remove_list` to a list of IP addresses that are no longer allowed to access restricted information. 
+
+remove_list = ["192.168.97.225", "192.168.158.170", "192.168.201.40", "192.168.58.57"]
+    
+
+    # Call `update_file()` and pass in "allow_list.txt" and a "remove_list" IP addresses to be removed
+
+update_file(import_file , remove_list)
+
+# Build `with` statement to read in the updated file
+
+with open("allow_list.txt", "r") as file:
+
+  # Read in the updated file and store the contents in `text`
+
+  text = file.read()
+
+# Display the contents of `text`
+
+print(text)
